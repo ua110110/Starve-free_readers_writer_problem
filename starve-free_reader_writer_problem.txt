@@ -2,7 +2,7 @@
 
 		Acquire(mutex); 
 			 if( (current_readers + queued_readers) == 0){
-				 Release(write_sem);  
+				 Release(writing_semaphore);  
 				 current_writers += 1; 
 			 }
 			  
@@ -11,7 +11,7 @@
 			}
 		  
 		Release(mutex);
-	   Acquire(write_sem);  
+	   Acquire(writing_semaphore);  
 
 	   
 	   /*
@@ -26,7 +26,7 @@
 			while(queued_readers > 0){
 			   current_readers += 1;  
 			   queued_readers -= 1;
-			   Release(read_sem);  
+			   Release(reading_semaphore);  
 			}
 	   }
 	   Release(mutex);
@@ -35,7 +35,7 @@
 
 	    Acquire(mutex); 
 			 if( (current_writers + queued_writers) == 0){
-				 Release(read_sem);  
+				 Release(reading_semaphore);  
 				 current_readers += 1; 
 			 }
 			 else{
@@ -43,7 +43,7 @@
 			 }
 
 		Release(mutex);
-	   Acquire(read_sem);  
+	   Acquire(reading_semaphore);  
 
 	   
 	   /*
@@ -58,7 +58,7 @@
 			while(queued_writers > 0){
 			   current_writers += 1;  
 			   queued_writers -= 1;
-			   Release(write_sem);  
+			   Release(writing_semaphore);  
 			}
 	   }
 	   Release(mutex);
